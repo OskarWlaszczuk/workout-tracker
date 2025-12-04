@@ -1,0 +1,1 @@
+export const formatToKebabCase = (splitedString) => splitedString.join("-").toLowerCase();

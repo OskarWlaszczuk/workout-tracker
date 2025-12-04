@@ -1,0 +1,42 @@
+{
+    "id": 1,
+    "name": "Push",
+    "exercises": [
+        {
+            "id": 1,
+            "name": "Bench Press",
+            "sets": 3,
+            "reps_range": {
+                "min": 10,
+                "max": 12
+            }
+        },
+        {
+            "id": 2,
+            "name": "Lateral Raises",
+            "sets": 3,
+            "reps_range": {
+                "min": 10,
+                "max": 12
+            }
+        },
+        {
+            "id": 3,
+            "name": "Triceps Extension",
+            "sets": 3,
+            "reps_range": {
+                "min": 10,
+                "max": 12
+            }
+        },
+        {
+            "id": 4,
+            "name": "Leg Extension",
+            "sets": 3,
+            "reps_range": {
+                "min": 10,
+                "max": 12
+            }
+        }
+    ]
+}
