@@ -1,9 +1,8 @@
 import { CustomElement } from "../utils/CustomElement.js";
 
-export const ExerciseListItem = ({ contentText, children }) => {
+export const ExerciseListItem = ({ content }) => {
     return new CustomElement({
         name: "li",
-        contentText,
+        content
     })
-        .addContent(children)
 };
