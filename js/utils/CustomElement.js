@@ -1,14 +1,18 @@
-const createCustomElement = (elementConfig) => {
-    const element = document.createElement(elementConfig.name);
+const createCustomElement = ({ name, content, attributes }) => {
+    const element = document.createElement(name);
 
-    if (elementConfig.contentText) {
-        element.textContent = elementConfig.contentText;
+    if (content.length) {
+        element.append([...content])
     }
 
-    elementConfig.attributes?.forEach(attribute => {
+    // if (elementConfig.contentText) {
+    //     element.textContent = elementConfig.contentText;
+    // }
+
+    attributes?.forEach(attribute => {
         element.setAttribute(attribute.name, attribute.value);
     });
-    
+
     return element;
 };
 
@@ -20,16 +24,17 @@ export class CustomElement {
         this.element = createCustomElement(elementConfig);
     }
 
-    render(parentElement) {
-        parentElement.appendChild(this.element);
-        return this;
-    }
+    // render(parentElement) {
+    //     parentElement.appendChild(this.element);
+    //     return this;
+    // }
 
-    addContent(childrenElements) {
-        childrenElements.forEach(child => {
-            this.element.appendChild(child);
-        });
+    // addContent(childrenElements) {
+    //     //użyć pojedynczej metody append + pozwolić, aby childrenElement mogło być typu string
+    //     childrenElements.forEach(child => {
+    //         this.element.appendChild(child);
+    //     });
 
-        return this;
-    }
+    //     return this;
+    // }
 };
