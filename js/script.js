@@ -1,5 +1,9 @@
-import { Component, Workout } from "./Components/Workout.js";
+import { ExerciseList } from "./CustomElements/ExerciseList.js";
+import { ExerciseListItem } from "./CustomElements/ExerciseListItem.js";
 import { WorkoutHeader } from "./customElements/WorkoutHeader.js";
+import { Component } from "./utils/Component.js";
+// import { WorkoutHeader } from "./customElements/WorkoutHeader.js";
+import { fetchWorkout } from "./utils/fetchWorkout.js";
 //   // const toggleOpenButtonElement = dynaminToggleOpenButtonElement(buttonIndex);
 //         console.log(toggleOpenButton);
 
@@ -146,31 +150,50 @@ import { WorkoutHeader } from "./customElements/WorkoutHeader.js";
 
     const init = async () => {
         const userUrlLocation = window.location.pathname;
-        // const Workout = new Component({
-        //     children: [
-        //         {
-        //             id: "workout-header",
-        //             element: WorkoutHeader({ content: "" }),
-        //         }
-        //     ]
-        // })
+
+        const workoutData = await fetchWorkout();
+
+        const BodyElement = document.querySelector(".js-body");
+
+        const Workout = new Component({
+            parent: BodyElement,
+            children: [
+                {
+                    id: "workoutHeader",
+                    element: WorkoutHeader({
+                        children: [
+                            {
+                                id: workoutData.name,
+                                element: workoutData.name
+                            }
+                        ]
+                    }).element,
+                },
+                {
+                    id: "exerciseList",
+                    element:
+                        ExerciseList({
+                            children: [
+                                ...workoutData.exercises.map((exercise) => ({
+                                    id: exercise.id,
+                                    element: ExerciseListItem({ exercise }).element,
+                                }))
+                            ]
+                        }).element,
+                },
+            ]
+        });
+
+        console.log(Workout.children[1].element.children[0]);
+
         switch (userUrlLocation) {
             case "/index.html":
                 //wywołanie Workout powoduje zmanę widoku strony 
-                return Workout();
-                ;
+                return Workout.render(BodyElement)
+                    ;
             default:
                 break;
         }
-
-        // const workout = await fetchWorkout();
-        // ExerciseTab()
-        // renderWorkoutNameElement(workout.name);
-        // renderWorkoutExercisesElement(workout.exercises);
-        // // workout.exercises.forEach(ex => {
-        // //     console.log(ExerciseTab(ex));
-        // // })
-        // bindToggleExerciseOpenEvents(workout.exercises);
     };
 
     init();
