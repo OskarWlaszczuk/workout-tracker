@@ -2,12 +2,9 @@ const createCustomElement = ({ name, content, attributes }) => {
     const element = document.createElement(name);
 
     if (content.length) {
-        element.append([...content])
+        element.append(...content)
     }
 
-    // if (elementConfig.contentText) {
-    //     element.textContent = elementConfig.contentText;
-    // }
 
     attributes?.forEach(attribute => {
         element.setAttribute(attribute.name, attribute.value);
@@ -15,19 +12,47 @@ const createCustomElement = ({ name, content, attributes }) => {
 
     return element;
 };
-
-//do generowania custom elementów
 export class CustomElement {
     constructor(elementConfig) {
-        //wywołanie generateHtmlElement doda do prop 
-        // element gotowy obiekt elementu HTML
-        this.element = createCustomElement(elementConfig);
+        this.children = elementConfig.children
+        this.element = createCustomElement({
+            name: elementConfig.name,
+            attributes: elementConfig.attributes,
+            content: this.children.map(({ element }) => element)
+        });
     }
 
-    // render(parentElement) {
-    //     parentElement.appendChild(this.element);
-    //     return this;
-    // }
+    deleteChild(childId) {
+        this.children = [
+            ...this.children.filter(({ id }) => id !== childId),
+        ]
+    }
+
+    editChildElement(childId, newChildElement) {
+        const targetChildIndex = this.children.findIndex(({ id }) => id === childId);
+
+        const updatedChild = {
+            ...this.children.find(({ id }) => id === childId),
+            element: newChildElement,
+        };
+        const childrenWithoutEditingChild = this.children.filter(({ id }) => id !== childId);
+
+        const updatedChildren = [
+            ...childrenWithoutEditingChild.slice(0, targetChildIndex),
+            updatedChild,
+            ...childrenWithoutEditingChild.slice(targetChildIndex)
+        ];
+
+        this.children = updatedChildren;
+    }
+
+    addChild(newContent) {
+        console.log("adding child");
+
+        this.element.append(...Array.from(this.element.children), newContent)
+
+        return this
+    }
 
     // addContent(childrenElements) {
     //     //użyć pojedynczej metody append + pozwolić, aby childrenElement mogło być typu string
