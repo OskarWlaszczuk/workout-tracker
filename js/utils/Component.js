@@ -1,9 +1,3 @@
-function* idGenerator(initialId, isUpdating) {
-    while (!isUpdating) {
-        yield initialId;
-        initialId++
-    }
-};
 export class Component {
     constructor(componentFunction) {
         this.componentFunction = componentFunction;
